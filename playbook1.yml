@@ -1,6 +1,24 @@
 - name: "Connect to RDS and test sample SQL scripts"  
   hosts: all
+  user: ubuntu
   tasks:
-    - name: 'install psql'
-      command: sudo apt-get install postgresql-client -y
-        
+    - name: "install psql"
+      command: sudo apt-get install postgresql-client -y        
+
+    - name: Copy sql file to hosts
+      copy:
+        src: sqlquery.sql
+        dest: sqlquery.sql
+
+    - name: Copy env file
+      copy:
+        src: ./.env
+        dest: .env
+
+    - name: Copy sql file to hosts
+      copy:
+        src: script.sh
+        dest: script.sh
+    
+    - name: Run script
+      command: bash script.sh  
