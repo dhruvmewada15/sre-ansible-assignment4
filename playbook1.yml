@@ -5,20 +5,33 @@
     - name: "install psql"
       command: sudo apt-get install postgresql-client -y        
 
-    - name: Copy sql file to hosts
-      copy:
-        src: sqlquery.sql
-        dest: sqlquery.sql
+    # - name: Copy sql file to hosts
+    #   copy:
+    #     src: sqlquery.sql
+    #     dest: sqlquery.sql
 
-    - name: Copy env file
-      copy:
-        src: ./.env
-        dest: .env
+    # - name: Copy env file
+    #   copy:
+    #     src: ./.env
+    #     dest: .env
 
-    - name: Copy sql file to hosts
-      copy:
-        src: script.sh
-        dest: script.sh
+    # - name: Copy sql file to hosts
+    #   copy:
+    #     src: script.sh
+    #     dest: script.sh
     
+    - name: Copy all files to the host
+      copy:
+        src: "{{ item }}"
+        dest: /home/ubuntu    
+      with_items:
+        - .env
+        - script.sh
+        - sqlquery.sql
+
     - name: Run script
-      command: bash script.sh  
+      command: bash script.sh 
+      register: out
+    
+    - debug: var=out.stdout_lines
+ 
