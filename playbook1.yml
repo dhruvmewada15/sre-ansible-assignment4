@@ -1,0 +1,6 @@
+- name: "Connect to RDS and test sample SQL scripts"  
+  hosts: all
+  tasks:
+    - name: 'install psql'
+      command: sudo apt-get install postgresql-client -y
+        
